@@ -1,47 +1,64 @@
-GitHub "Good First Issue" Notifier
-An automated workflow built with n8n.io that monitors specified GitHub repositories for beginner-friendly open-source contribution opportunities and sends real-time notifications to a Telegram channel.
+# 🚀 Good First Issue Notifier
 
-🎯 Problem Solved
-For developers looking to start contributing to open-source, finding the right first issue can be a challenge. Manually checking dozens of repositories for issues labeled "good first issue" is time-consuming and inefficient. This project automates the entire discovery process, creating a streamlined, real-time feed of accessible contribution opportunities.
+An automated workflow built with **[n8n.io](https://n8n.io/)** that monitors GitHub repositories for beginner-friendly issues and sends **real-time notifications** to a Telegram channel.
 
-🔧 How It Works
-The workflow runs on a regular schedule and executes the following steps:
+---
 
-Schedule Trigger: A CRON-based trigger fires the workflow at a set interval (e.g., every hour) to check for new issues.
+## 🎯 Problem Solved  
+For developers looking to start contributing to open source, finding the right **“good first issue”** can be difficult.  
+Manually checking dozens of repositories is **time-consuming** and inefficient.  
 
-Fetch Repository Issues: The workflow connects to the GitHub API to retrieve a list of all open issues from one or more target repositories.
+This project automates the discovery process and provides a **streamlined, real-time feed** of contribution opportunities.
 
-Filter for "Good First Issues": It then loops through each issue, parsing the JSON data to identify and filter for only those that contain the "good first issue" label.
+---
 
-Format Notification: The relevant details for each matching issue (such as Title, Repository Name, and URL) are extracted and formatted into a clean, readable message using the "Edit Fields" node.
+## 🔧 How It Works  
 
-Send Telegram Alert: Finally, the formatted message is sent to a dedicated Telegram channel via the Telegram Bot API, immediately notifying subscribers of the new opportunity.
+1. **⏰ Schedule Trigger**  
+   A CRON-based trigger runs the workflow at regular intervals (e.g., every hour).  
 
-🚀 Workflow Visualization
-Here is a visual representation of the workflow logic built on the n8n canvas:
+2. **📂 Fetch Repository Issues**  
+   Connects to the **GitHub API** to retrieve all open issues from one or more repositories.  
 
-🛠️ Technologies & APIs Used
-Core Tool: n8n.io
+3. **🔎 Filter for “Good First Issues”**  
+   Loops through issues and filters those labeled `good first issue`.  
 
-APIs Integrated:
+4. **📝 Format Notification**  
+   Extracts key details (Title, Repo Name, URL) and formats them into a clean message.  
 
-GitHub API (for fetching issues)
+5. **📲 Send Telegram Alert**  
+   Uses the **Telegram Bot API** to instantly notify subscribers in a Telegram channel.  
 
-Telegram Bot API (for sending notifications)
+---
 
-Data Format: JSON
+## 🛠️ Technologies & APIs Used  
 
-Core Concepts: Workflow Automation, API Integration, Webhooks, CRON Scheduling
+- **Core Tool**: [n8n.io](https://n8n.io/)  
+- **APIs Integrated**:  
+  - GitHub API (fetch issues)  
+  - Telegram Bot API (send alerts)  
+- **Data Format**: JSON  
+- **Core Concepts**: Workflow Automation, API Integration, Webhooks, CRON Scheduling  
 
-⚙️ Configuration & Setup
-To replicate this workflow, you will need:
+---
 
-An n8n instance (cloud or self-hosted).
+## ⚙️ Configuration & Setup  
 
-A GitHub Personal Access Token with repo scope.
+To set up this workflow:  
 
-A Telegram Bot Token and a Channel/Chat ID.
+1. Install or deploy an **n8n instance** (cloud or self-hosted).  
+2. Generate a **GitHub Personal Access Token** with `repo` scope.  
+3. Create a **Telegram Bot** and obtain:  
+   - Bot Token  
+   - Channel/Chat ID  
+4. Import the workflow JSON file from this repository into your n8n canvas.  
+5. Update the GitHub and Telegram credentials with your own tokens.  
 
-The workflow .json file from this repository.
+---
 
-Import the JSON into your n8n canvas and update the credential placeholders in the GitHub and Telegram nodes with your own API keys.
+## 📊 Workflow Visualization  
+
+Here’s a simplified view of the workflow on the n8n canvas:
+<img width="1397" height="348" alt="image" src="https://github.com/user-attachments/assets/607e941e-8b59-4dbd-ab0a-33885614bf5c" />
+
+
