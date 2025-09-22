@@ -1,0 +1,181 @@
+{
+  "name": "github-opensource-notifier",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "dcb42dec-6c44-4739-8da1-0de8875fbfa7",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "repository",
+        "owner": {
+          "__rl": true,
+          "value": "microsoft",
+          "mode": "list",
+          "cachedResultName": "microsoft",
+          "cachedResultUrl": "https://github.com/microsoft"
+        },
+        "repository": {
+          "__rl": true,
+          "value": "vscode",
+          "mode": "list",
+          "cachedResultName": "vscode",
+          "cachedResultUrl": "https://github.com/microsoft/vscode"
+        },
+        "getRepositoryIssuesFilters": {
+          "labels": "good first issue",
+          "state": "open"
+        }
+      },
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "a9c53793-0741-4c0e-8360-9cf46875d165",
+      "name": "Get issues of a repository",
+      "webhookId": "6a084051-387a-45e3-a99e-046b01ba94c1",
+      "credentials": {
+        "githubOAuth2Api": {
+          "id": "fXGMlWLK8qTSpIiV",
+          "name": "GitHub account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        416,
+        0
+      ],
+      "id": "47b0f0db-4eb4-4788-ac15-40e4f4965d18",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5d6e86d2-8fca-4717-bbee-eea53cde2f2c",
+              "name": "message",
+              "value": "=🚀 New Good First Issue!  Project: {{ $json.html_url.split('/')[3] + '/' + $json.html_url.split('/')[4] }} Title: {{ $json.title }} Link: {{ $json.html_url }}  Go grab it and start contributing!",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        704,
+        16
+      ],
+      "id": "45122245-ce7a-42a7-b322-854692479346",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "chatId": "-1003019129818",
+        "text": "={{ $json.message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        912,
+        16
+      ],
+      "id": "1152ef29-ea35-485a-aa7c-b4ec0ce86c5f",
+      "name": "Send a text message",
+      "webhookId": "7c77a89b-8f90-4653-a131-2deb03eb5595",
+      "credentials": {
+        "telegramApi": {
+          "id": "UiuNpBzorBDfsveJ",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get issues of a repository",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get issues of a repository": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "02bc4e88-4a4f-4caa-80ab-e9b752b2ebf7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "f67f49689502a89fa4bbbe85580fff23b3e5b2ec1883c4d5ae25c8ce389ad5bb"
+  },
+  "id": "gKeAPjT33p0B5m8x",
+  "tags": []
+}
